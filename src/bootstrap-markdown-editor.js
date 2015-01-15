@@ -25,6 +25,10 @@
                 mdPreview = plugin.find('.md-preview'),
                 mdLoading = plugin.find('.md-loading');
 
+            plugin.css({
+                width: defaults.width
+            });
+
             mdEditor.css({
                 width: defaults.width,
                 height: defaults.height,
