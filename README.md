@@ -18,3 +18,8 @@ This is a jQuery plugin.
 * Fullscreen
 * Themes
 * i18n
+
+## Screenshot
+
+![Screenshot 1](screenshots/screenshot-01.png)
+
