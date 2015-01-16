@@ -23,7 +23,7 @@ This is a jQuery plugin.
 
 ![Screenshot 1](screenshots/screenshot-01.png)
 
-## Basic Usage
+## Example Usage
 
 Include the CSS files of Bootstrap and Bootstrap Markdown Editor:
 
@@ -117,3 +117,17 @@ if (! empty($_FILES)) {
 
 echo json_encode($uploadedFiles);
 ```
+
+## Shortcuts
+
+The following shortcuts are available.
+They can be used with or without selected text.
+
+- **Ctrl-B / ⌘B**: Bold
+- **Ctrl-I / ⌘I**: Italic
+- **Ctrl-K / ⌘K**: Link
+
+## Plugin documentation
+
+### Options
+
