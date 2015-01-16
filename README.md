@@ -57,7 +57,7 @@ $('#myEditor').markdownEditor();
 To get the content in any moment:
 
 ```javascript
-$('#myEditor').markdownEditor('content');
+var markdownContent = $('#myEditor').markdownEditor('content');
 ```
 
 ## Implementing the preview
