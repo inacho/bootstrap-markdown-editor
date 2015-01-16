@@ -365,7 +365,6 @@
     }
 
     $.fn.markdownEditor.defaults = {
-        autoSelector: '.markdown-editor',
         label: {
             btnHeader1: 'Header 1',
             btnHeader2: 'Header 2',
