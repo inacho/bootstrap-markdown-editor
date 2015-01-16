@@ -48,10 +48,16 @@ Create a div for the editor:
 <div id="myEditor"># Test</div>
 ```
 
-Call the plugin:
+Initialize the editor:
 
 ```javascript
 $('#myEditor').markdownEditor();
+```
+
+To get the content in any moment:
+
+```javascript
+$('#myEditor').markdownEditor('content');
 ```
 
 ## Implementing the preview
