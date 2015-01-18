@@ -23,7 +23,7 @@ This is a jQuery plugin.
 
 ![Screenshot 1](screenshots/screenshot-01.png)
 
-## Installation with bower
+## Installation with Bower
 
     bower install bootstrap-markdown-editor --save
 
