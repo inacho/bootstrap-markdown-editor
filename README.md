@@ -1,6 +1,6 @@
 # Bootstrap Markdown Editor
 
-Markdown editor for Bootstrap with preview, image upload support, shortcuts and other features.
+Markdown editor for Bootstrap with preview, image upload support, shortcuts and other features.  
 This is a jQuery plugin.
 
 ## Requirements
@@ -42,7 +42,7 @@ Optionally, include the script of Bootstrap to enable tooltips:
 <script src="dist/js/bootstrap-markdown-editor.js"></script>
 ```
 
-Create a div for the editor:
+Create a div for the editor with optional content in markdown format:
 
 ```html
 <div id="myEditor"># Test</div>
@@ -62,8 +62,8 @@ var markdownContent = $('#myEditor').markdownEditor('content');
 
 ## Implementing the preview
 
-You have to implement the parsing of the Markdown.
-Bootstrap Markdown Editor provides you a callback where you have to parse the markdown and return the html.
+You have to implement the parsing of the Markdown.  
+Bootstrap Markdown Editor provides you a callback where you have to parse the markdown and return the html.  
 To activate the preview you have to use the following options:
 
 ```javascript
@@ -91,7 +91,7 @@ $('#myEditor').markdownEditor({
 
 ## Implementing the image upload
 
-You have to implement the server side part of the upload process.
+You have to implement the server side part of the upload process.  
 To activate the image uploads you have to use the following options:
 
 ```javascript
@@ -120,7 +120,7 @@ echo json_encode($uploadedFiles);
 
 ## Shortcuts
 
-The following shortcuts are available.
+The following shortcuts are available.  
 They can be used with or without selected text.
 
 - **Ctrl-B / ⌘B**: Bold
@@ -131,3 +131,128 @@ They can be used with or without selected text.
 
 ### Options
 
+The following options can be passed as an object at the initialization of the plugin:
+
+```javascript
+$('#myEditor').markdownEditor({
+  // Options
+});
+```
+
+Also, you can override the plugin default options. Example:
+
+```javascript
+$.fn.markdownEditor.defaults.width = '250px';
+```
+
+#### width
+
+**Type**: string  
+**Default**: '100%'
+
+The width of the editor
+
+#### height
+
+**Type**: string  
+**Default**: '400px'
+
+The height of the editor
+
+#### fontSize
+
+**Type**: string  
+**Default**: '14px'
+
+The font size of the editor
+
+#### theme
+
+**Type**: string  
+**Default**: 'tomorrow'
+
+The theme of the editor. See the available themes at the homepage of Ace (http://ace.c9.io)
+
+#### fullscreen
+
+**Type**: boolean  
+**Default**: true
+
+Enable / disable fullscreen
+
+#### imageUpload
+
+**Type**: boolean  
+**Default**: false
+
+Enable / disable the upload of images. If enabled, you have to specify the option `uploadPath`
+
+#### uploadPath
+
+**Type**: uploadPath  
+**Default**: ''
+
+The path of the server side script that receives the images. The script has to return an array of the **public path** of the successfully uploaded images in json format.
+
+#### preview
+
+**Type**: boolean  
+**Default**: false
+
+Enable / disable the preview. If enabled, you have to specify the option `onPreview`
+
+#### onPreview
+
+**Type**: function  
+**Default**:
+
+```javascript
+function (content, callback) {
+  callback(content);
+}
+```
+
+This callback is called when the user clicks on the preview button and has two parameters:  
+**content** that contains the text in markdown.  
+**callback** is function that you have to call with the parsed html as a parameter
+
+#### label
+
+**Type**: object
+**Default**:
+
+```javascript
+{
+  btnHeader1: 'Header 1',
+  btnHeader2: 'Header 2',
+  btnHeader3: 'Header 3',
+  btnBold: 'Bold',
+  btnItalic: 'Italic',
+  btnLink: 'Link',
+  btnImage: 'Insert image',
+  btnUpload: 'Uplaod image',
+  btnEdit: 'Edit',
+  btnPreview: 'Preview',
+  btnFullscreen: 'Fullscreen',
+  loading: 'Loading'
+}
+```
+
+This object contains the strings that can be translated
+
+### Methods
+
+The methods are invoked passing the name of the method as string.  
+Only one method is available:
+
+```javascript
+var content = $('#myEditor').markdownEditor('content'); // Returns the content of the editor
+```
+
+## License
+
+Licensed under MIT (https://github.com/inacho/bootstrap-markdown-editor/blob/master/LICENSE).
+
+## Authors
+
+[Ignacio de Tomás](https://github.com/inacho)
