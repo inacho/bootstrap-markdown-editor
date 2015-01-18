@@ -23,13 +23,17 @@ This is a jQuery plugin.
 
 ![Screenshot 1](screenshots/screenshot-01.png)
 
+## Installation with bower
+
+    bower install bootstrap-markdown-editor --save
+
 ## Example Usage
 
 Include the CSS files of Bootstrap and Bootstrap Markdown Editor:
 
 ```html
 <link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-<link href="dist/css/bootstrap-markdown-editor.css" rel="stylesheet">
+<link href="bower_components/bootstrap-markdown-editor/dist/css/bootstrap-markdown-editor.css" rel="stylesheet">
 ```
 
 Include the scripts of jQuery, Ace and Bootstrap Markdown Editor.
@@ -39,7 +43,7 @@ Optionally, include the script of Bootstrap to enable tooltips:
 <script src="bower_components/jquery/dist/jquery.min.js"></script>
 <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 <script src="bower_components/ace-builds/src-min/ace.js"></script>
-<script src="dist/js/bootstrap-markdown-editor.js"></script>
+<script src="bower_components/bootstrap-markdown-editor/dist/js/bootstrap-markdown-editor.js"></script>
 ```
 
 Create a div for the editor with optional content in markdown format:
