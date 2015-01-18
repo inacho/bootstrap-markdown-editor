@@ -6,7 +6,7 @@
     var methods = {
         init: function (options) {
 
-            var defaults = $.extend({}, $.fn.markdownEditor.defaults, options),
+            var defaults = $.extend(true, {}, $.fn.markdownEditor.defaults, options),
                 plugin = this,
                 preview = false,
                 fullscreen = false;
@@ -365,6 +365,17 @@
     }
 
     $.fn.markdownEditor.defaults = {
+        width: '100%',
+        height: '400px',
+        fontSize: '14px',
+        theme: 'tomorrow',
+        fullscreen: true,
+        imageUpload: false,
+        uploadPath: '',
+        preview: false,
+        onPreview: function (content, callback) {
+            callback(content);
+        },
         label: {
             btnHeader1: 'Header 1',
             btnHeader2: 'Header 2',
@@ -378,18 +389,7 @@
             btnPreview: 'Preview',
             btnFullscreen: 'Fullscreen',
             loading: 'Loading'
-        },
-        theme: 'tomorrow',
-        width: '100%',
-        height: '400px',
-        fontSize: '14px',
-        preview: false,
-        fullscreen: true,
-        onPreview: function (content, callback) {
-            callback(content);
-        },
-        imageUpload: false,
-        uploadPath: '',
+        }
     };
 
 }(jQuery));
