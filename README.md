@@ -3,6 +3,8 @@
 Markdown editor for Bootstrap with preview, image upload support, shortcuts and other features.  
 This is a jQuery plugin.
 
+**Demo**: http://inacho.github.io/bootstrap-markdown-editor/
+
 ## Requirements
 
 * Bootstrap 3
