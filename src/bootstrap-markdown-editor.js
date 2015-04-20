@@ -106,13 +106,19 @@
                     selectedText = editor.session.getTextRange(editor.getSelectionRange());
 
                 if (btnType === 'h1') {
-                    insertHeader(editor, '#');
+                    insertBeforeText(editor, '#');
 
                 } else if (btnType === 'h2') {
-                    insertHeader(editor, '##');
+                    insertBeforeText(editor, '##');
 
                 } else if (btnType === 'h3') {
-                    insertHeader(editor, '###');
+                    insertBeforeText(editor, '###');
+
+                } else if (btnType === 'ul') {
+                    insertBeforeText(editor, '*');
+
+                } else if (btnType === 'ol') {
+                    insertBeforeText(editor, '1.');
 
                 } else if (btnType === 'bold') {
                     editor.execCommand('bold');
@@ -304,7 +310,7 @@
         });
     }
 
-    function insertHeader (editor, string) {
+    function insertBeforeText (editor, string) {
 
         if (editor.getCursorPosition().column === 0) {
             editor.navigateLineStart();
@@ -332,6 +338,11 @@
                 html += '<div class="btn-group">';
                     html += '<button type="button" data-mdtooltip="tooltip" title="' + options.label.btnBold + '" class="md-btn btn btn-sm btn-default" data-btn="bold"><span class="glyphicon glyphicon-bold"></span></button>';
                     html += '<button type="button" data-mdtooltip="tooltip" title="' + options.label.btnItalic + '" class="md-btn btn btn-sm btn-default" data-btn="italic"><span class="glyphicon glyphicon-italic"></span></button>';
+                html += '</div>'; // .btn-group
+
+                html += '<div class="btn-group">';
+                    html += '<button type="button" data-mdtooltip="tooltip" title="' + options.label.btnList + '" class="md-btn btn btn-sm btn-default" data-btn="ul"><span class="glyphicon glyphicon glyphicon-list"></span></button>';
+                    html += '<button type="button" data-mdtooltip="tooltip" title="' + options.label.btnOrderedList + '" class="md-btn btn btn-sm btn-default" data-btn="ol"><span class="glyphicon glyphicon-th-list"></span></button>';
                 html += '</div>'; // .btn-group
 
                 html += '<div class="btn-group">';
@@ -382,6 +393,8 @@
             btnHeader3: 'Header 3',
             btnBold: 'Bold',
             btnItalic: 'Italic',
+            btnList: 'Unordered list',
+            btnOrderedList: 'Ordered list',
             btnLink: 'Link',
             btnImage: 'Insert image',
             btnUpload: 'Uplaod image',

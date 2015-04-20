@@ -234,6 +234,8 @@ This callback is called when the user clicks on the preview button and has two p
   btnHeader3: 'Header 3',
   btnBold: 'Bold',
   btnItalic: 'Italic',
+  btnList: 'Unordered list',
+  btnOrderedList: 'Ordered list',
   btnLink: 'Link',
   btnImage: 'Insert image',
   btnUpload: 'Uplaod image',
