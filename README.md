@@ -251,10 +251,10 @@ This object contains the strings that can be translated
 ### Methods
 
 The methods are invoked passing the name of the method as string.  
-Only one method is available:
 
 ```javascript
 var content = $('#myEditor').markdownEditor('content'); // Returns the content of the editor
+$('#myEditor').markdownEditor('setContent', content); // Sets the content of the editor
 ```
 
 ## License
