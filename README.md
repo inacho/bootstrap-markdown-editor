@@ -1,5 +1,7 @@
 # Bootstrap Markdown Editor
 
+[![Built with Grunt](https://cdn.gruntjs.com/builtwith.png)](http://gruntjs.com/)
+
 Markdown editor for Bootstrap with preview, image upload support, shortcuts and other features.  
 This is a jQuery plugin.
 
