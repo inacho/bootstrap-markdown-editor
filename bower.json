@@ -1,7 +1,7 @@
 {
   "name": "Bootstrap Markdown Editor",
   "description": "Markdown editor for Bootstrap with preview, image upload support, shortcuts and other features.",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "authors": [
     "Ignacio de Tomás <nacho@inacho.es>"
   ],
