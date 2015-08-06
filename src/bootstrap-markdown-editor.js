@@ -353,7 +353,7 @@
                     html += '<button type="button" data-mdtooltip="tooltip" title="' + options.label.btnLink + '" class="md-btn btn btn-sm btn-default" data-btn="link"><span class="glyphicon glyphicon-link"></span></button>';
                     html += '<button type="button" data-mdtooltip="tooltip" title="' + options.label.btnImage + '" class="md-btn btn btn-sm btn-default" data-btn="image"><span class="glyphicon glyphicon-picture"></span></button>';
                     if (options.imageUpload === true) {
-                        html += '<button type="button" data-mdtooltip="tooltip" title="' + options.label.btnUpload + '" class="btn btn-sm btn-default md-btn-file"><span class="glyphicon glyphicon-upload"></span><input class="md-input-upload" type="file" multiple accept=".jpg,.jpeg,.png,.gif"></button>';
+                        html += '<div data-mdtooltip="tooltip" title="' + options.label.btnUpload + '" class="btn btn-sm btn-default md-btn-file"><span class="glyphicon glyphicon-upload"></span><input class="md-input-upload" type="file" multiple accept=".jpg,.jpeg,.png,.gif"></div>';
                     }
                 html += '</div>'; // .btn-group
 
@@ -401,7 +401,7 @@
             btnOrderedList: 'Ordered list',
             btnLink: 'Link',
             btnImage: 'Insert image',
-            btnUpload: 'Uplaod image',
+            btnUpload: 'Upload image',
             btnEdit: 'Edit',
             btnPreview: 'Preview',
             btnFullscreen: 'Fullscreen',
