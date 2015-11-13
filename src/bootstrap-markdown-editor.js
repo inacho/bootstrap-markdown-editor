@@ -195,7 +195,8 @@
 
                 editor.focus();
             });
-
+            
+            this.editor = editor;
             return this;
         },
         content: function () {
@@ -373,7 +374,7 @@
             html += '</div>'; // .btn-toolbar
         html += '</div>'; // .md-toolbar
 
-        html += '<div class="md-editor">' + $('<div>').text($.trim(content)).html() + '</div>';
+        html += '<div class="md-editor">' + $('<div>').text(content).html() + '</div>';
         html += '<div class="md-preview" style="display:none"></div>';
 
         return html;
