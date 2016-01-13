@@ -30,13 +30,11 @@
             });
 
             mdEditor.css({
-                width: defaults.width,
                 height: defaults.height,
                 fontSize: defaults.fontSize
             });
 
             mdPreview.css({
-                width: defaults.width,
                 height: defaults.height
             });
 
