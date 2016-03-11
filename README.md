@@ -80,7 +80,7 @@ $('#myEditor').markdownEditor({
   preview: true,
   // This callback is called when the user click on the preview button:
   onPreview: function (content, callback) {
-  
+
     // Example of implementation with ajax:
     $.ajax({
       url: 'preview.php',
@@ -180,6 +180,13 @@ The font size of the editor
 **Default**: 'tomorrow'
 
 The theme of the editor. See the available themes at the homepage of Ace (http://ace.c9.io)
+
+#### softTabs
+
+**Type**: boolean  
+**Default**: true
+
+Pass false to disable the use of soft tabs. Soft tabs means you're using spaces instead of the tab character ('\t')
 
 #### fullscreen
 

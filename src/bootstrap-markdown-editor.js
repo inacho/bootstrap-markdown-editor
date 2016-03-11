@@ -47,6 +47,7 @@
             editor.setTheme('ace/theme/' + defaults.theme);
             editor.getSession().setMode('ace/mode/markdown');
             editor.getSession().setUseWrapMode(true);
+            editor.getSession().setUseSoftTabs(defaults.softTabs);
 
             editor.setHighlightActiveLine(false);
             editor.setShowPrintMargin(false);
@@ -195,8 +196,7 @@
 
                 editor.focus();
             });
-            
-            this.editor = editor;
+
             return this;
         },
         content: function () {
@@ -385,6 +385,7 @@
         height: '400px',
         fontSize: '14px',
         theme: 'tomorrow',
+        softTabs: true,
         fullscreen: true,
         imageUpload: false,
         uploadPath: '',
