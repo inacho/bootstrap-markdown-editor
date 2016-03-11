@@ -204,7 +204,7 @@
         },
         setContent: function(str) {
           var editor = ace.edit(this.find('.md-editor')[0]);
-          editor.setValue(str);
+          editor.setValue(str, 1);
         }
     };
 

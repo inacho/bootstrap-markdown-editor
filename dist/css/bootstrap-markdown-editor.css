@@ -1,6 +1,6 @@
 /*!
  * Bootstrap Markdown Editor v1.2.1 (https://github.com/inacho/bootstrap-markdown-editor)
- * Copyright 2015 Ignacio de Tomás <nacho@inacho.es>
+ * Copyright 2016 Ignacio de Tomás <nacho@inacho.es>
  * Licensed under MIT (https://github.com/inacho/bootstrap-markdown-editor/blob/master/LICENSE)
  */
 
