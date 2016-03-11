@@ -110,6 +110,7 @@ $('#myEditor').markdownEditor({
 ```
 
 In your server side script you have to return an array of the **public path** of the successfully uploaded images in json format.
+
 Example in PHP:
 
 ```php
@@ -124,6 +125,12 @@ if (! empty($_FILES)) {
 }
 
 echo json_encode($uploadedFiles);
+```
+
+Response example:
+
+```
+["/path/to/my-picture.jpg"]
 ```
 
 ## Shortcuts
