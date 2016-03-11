@@ -232,17 +232,25 @@
     };
 
     function uploadFiles (url, files, editor, snippetManager, loading) {
-        if (! files.length) {
-            return;
+        var images = [],
+            i = 0;
+
+        for (i = 0; i < files.length; i++) {
+            if (/^image\//.test(files[i].type)) {
+                images.push(files[i]);
+            }
+        }
+
+        if (! images.length) {
+          return;
         }
 
         loading.show();
 
-        var data = new FormData(),
-            i = 0;
+        var data = new FormData();
 
-        for (i = 0; i < files.length; i++) {
-            data.append('file' + i, files[i]);
+        for (i = 0; i < images.length; i++) {
+            data.append('file' + i, images[i]);
         }
 
         $.ajax({
