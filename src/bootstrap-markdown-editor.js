@@ -65,9 +65,7 @@
                 plugin.find('.md-input-upload').on('change', function() {
                     var files = $(this).get(0).files;
 
-                    if (files.length) {
-                        uploadFiles(defaults.uploadPath, $(this).get(0).files, editor, snippetManager, mdLoading);
-                    }
+                    uploadFiles(defaults.uploadPath, $(this).get(0).files, editor, snippetManager, mdLoading);
                 });
 
                 plugin.on('dragenter', function (e) {
@@ -223,6 +221,9 @@
     };
 
     function uploadFiles (url, files, editor, snippetManager, loading) {
+        if (!files.length) {
+          return;
+        }
 
         loading.show();
 
