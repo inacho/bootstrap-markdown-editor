@@ -47,6 +47,7 @@
             editor.setTheme('ace/theme/' + defaults.theme);
             editor.getSession().setMode('ace/mode/markdown');
             editor.getSession().setUseWrapMode(true);
+            editor.getSession().setUseSoftTabs(defaults.softTabs);
 
             editor.setHighlightActiveLine(false);
             editor.setShowPrintMargin(false);
@@ -204,7 +205,7 @@
         },
         setContent: function(str) {
           var editor = ace.edit(this.find('.md-editor')[0]);
-          editor.setValue(str);
+          editor.setValue(str, 1);
         }
     };
 
@@ -373,7 +374,7 @@
             html += '</div>'; // .btn-toolbar
         html += '</div>'; // .md-toolbar
 
-        html += '<div class="md-editor">' + $('<div>').text($.trim(content)).html() + '</div>';
+        html += '<div class="md-editor">' + $('<div>').text(content).html() + '</div>';
         html += '<div class="md-preview" style="display:none"></div>';
 
         return html;
@@ -384,6 +385,7 @@
         height: '400px',
         fontSize: '14px',
         theme: 'tomorrow',
+        softTabs: true,
         fullscreen: true,
         imageUpload: false,
         uploadPath: '',

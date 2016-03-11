@@ -80,7 +80,7 @@ $('#myEditor').markdownEditor({
   preview: true,
   // This callback is called when the user click on the preview button:
   onPreview: function (content, callback) {
-  
+
     // Example of implementation with ajax:
     $.ajax({
       url: 'preview.php',
@@ -110,6 +110,7 @@ $('#myEditor').markdownEditor({
 ```
 
 In your server side script you have to return an array of the **public path** of the successfully uploaded images in json format.
+
 Example in PHP:
 
 ```php
@@ -124,6 +125,12 @@ if (! empty($_FILES)) {
 }
 
 echo json_encode($uploadedFiles);
+```
+
+Response example:
+
+```
+["/path/to/my-picture.jpg"]
 ```
 
 ## Shortcuts
@@ -180,6 +187,13 @@ The font size of the editor
 **Default**: 'tomorrow'
 
 The theme of the editor. See the available themes at the homepage of Ace (http://ace.c9.io)
+
+#### softTabs
+
+**Type**: boolean  
+**Default**: true
+
+Pass false to disable the use of soft tabs. Soft tabs means you're using spaces instead of the tab character ('\t')
 
 #### fullscreen
 
