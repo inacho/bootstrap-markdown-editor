@@ -8,24 +8,32 @@
 
             var defaults = $.extend(true, {}, $.fn.markdownEditor.defaults, options),
                 plugin = this,
+                container,
                 preview = false,
                 fullscreen = false;
 
+            // Hide the textarea
+            plugin.addClass('md-textarea-hidden');
+
+            // Create the container div after textarea
+            container = $('<div/>');
+            plugin.after(container);
+
             // Replace the content of the div with our html
-            plugin.addClass('md-container').html(editorHtml(this.text(), defaults));
+            container.addClass('md-container').html(editorHtml(plugin.val(), defaults));
 
             // If the Bootstrap tooltip library is loaded, initialize the tooltips of the toolbar
             if (typeof $().tooltip === 'function') {
-                plugin.find('[data-mdtooltip="tooltip"]').tooltip({
+                container.find('[data-mdtooltip="tooltip"]').tooltip({
                     container: 'body'
                 });
             }
 
-            var mdEditor = plugin.find('.md-editor'),
-                mdPreview = plugin.find('.md-preview'),
-                mdLoading = plugin.find('.md-loading');
+            var mdEditor = container.find('.md-editor'),
+                mdPreview = container.find('.md-preview'),
+                mdLoading = container.find('.md-loading');
 
-            plugin.css({
+            container.css({
                 width: defaults.width
             });
 
@@ -49,6 +57,11 @@
             editor.getSession().setUseWrapMode(true);
             editor.getSession().setUseSoftTabs(defaults.softTabs);
 
+            // Sync ace with the textarea
+            editor.getSession().on('change', function() {
+                plugin.val(editor.getSession().getValue());
+            });
+
             editor.setHighlightActiveLine(false);
             editor.setShowPrintMargin(false);
             editor.renderer.setShowGutter(false);
@@ -62,7 +75,7 @@
             // Image drag and drop and upload events
             if (defaults.imageUpload) {
 
-                plugin.find('.md-input-upload').on('change', function() {
+                container.find('.md-input-upload').on('change', function() {
                     var files = $(this).get(0).files;
 
                     if (files.length) {
@@ -70,17 +83,17 @@
                     }
                 });
 
-                plugin.on('dragenter', function (e) {
+                container.on('dragenter', function (e) {
                     e.stopPropagation();
                     e.preventDefault();
                 });
 
-                plugin.on('dragover', function (e) {
+                container.on('dragover', function (e) {
                     e.stopPropagation();
                     e.preventDefault();
                 });
 
-                plugin.on('drop', function (e) {
+                container.on('drop', function (e) {
                     e.preventDefault();
                     var files = e.originalEvent.dataTransfer.files;
 
@@ -102,7 +115,7 @@
             }
 
             // Toolbar events
-            plugin.find('.md-btn').click(function () {
+            container.find('.md-btn').click(function () {
                 var btnType = $(this).data('btn'),
                     selectedText = editor.session.getTextRange(editor.getSelectionRange());
 
@@ -142,8 +155,8 @@
 
                     mdPreview.hide();
                     mdEditor.show();
-                    plugin.find('.btn-edit').addClass('active');
-                    plugin.find('.btn-preview').removeClass('active');
+                    container.find('.btn-edit').addClass('active');
+                    container.find('.btn-preview').removeClass('active');
 
                     if (fullscreen === true) {
                         adjustFullscreenLayout(mdEditor);
@@ -160,8 +173,8 @@
 
                     mdEditor.hide();
                     mdPreview.show();
-                    plugin.find('.btn-preview').addClass('active');
-                    plugin.find('.btn-edit').removeClass('active');
+                    container.find('.btn-preview').addClass('active');
+                    container.find('.btn-edit').removeClass('active');
 
                     if (fullscreen === true) {
                         adjustFullscreenLayout(mdPreview);
@@ -173,7 +186,7 @@
                         fullscreen = false;
 
                         $('body, html').removeClass('md-body-fullscreen');
-                        plugin.removeClass('md-fullscreen');
+                        container.removeClass('md-fullscreen');
 
                         mdEditor.css('height', defaults.height);
                         mdPreview.css('height', defaults.height);
@@ -182,7 +195,7 @@
                         fullscreen = true;
 
                         $('body, html').addClass('md-body-fullscreen');
-                        plugin.addClass('md-fullscreen');
+                        container.addClass('md-fullscreen');
 
                         if (preview === false) {
                             adjustFullscreenLayout(mdEditor);

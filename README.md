@@ -50,22 +50,16 @@ Optionally, include the script of Bootstrap to enable tooltips:
 <script src="bower_components/bootstrap-markdown-editor/dist/js/bootstrap-markdown-editor.js"></script>
 ```
 
-Create a div for the editor with optional content in markdown format:
+Create a textarea for the editor with optional content in markdown format:
 
 ```html
-<div id="myEditor"># Test</div>
+<textarea name="text" id="myEditor"># Test</textarea>
 ```
 
 Initialize the editor:
 
 ```javascript
 $('#myEditor').markdownEditor();
-```
-
-To get the content in any moment:
-
-```javascript
-var markdownContent = $('#myEditor').markdownEditor('content');
 ```
 
 ## Implementing the preview
