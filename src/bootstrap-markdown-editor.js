@@ -221,8 +221,8 @@
     };
 
     function uploadFiles (url, files, editor, snippetManager, loading) {
-        if (!files.length) {
-          return;
+        if (! files.length) {
+            return;
         }
 
         loading.show();
