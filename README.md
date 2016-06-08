@@ -91,41 +91,24 @@ $('#myEditor').markdownEditor({
 });
 ```
 
-## Implementing the image upload
+## Implementing the file uploads
 
 You have to implement the server side part of the upload process.  
-To activate the image uploads you have to use the following options:
+To activate the file uploads you have to use the following options:
 
 ```javascript
 $('#myEditor').markdownEditor({
-  imageUpload: true, // Activate the option
+  fileUpload: true, // Activate the option
   uploadPath: 'upload.php' // Path of the server side script that receive the files
 });
 ```
 
-In your server side script you have to return an array of the **public path** of the successfully uploaded images in json format.
-
-Example in PHP:
-
-```php
-$uploadedFiles = array();
-
-if (! empty($_FILES)) {
-  foreach ($_FILES as $file) {
-    if (superAwesomeUploadFunction($file)) {
-      $uploadedFiles[] = '/img/' . urlencode($file['name']);
-    }
-  }
-}
-
-echo json_encode($uploadedFiles);
-```
-
-Response example:
+In your server side script you have to return an array of the successfully uploaded files in following json format.
 
 ```
-["/path/to/my-picture.jpg"]
+[{"filelink": "/path/to/my-picture.jpg", "filetype":"image", "filename": "My Picture"}]
 ```
+`filetype` can be ether "image" or file. 
 
 ## Shortcuts
 
