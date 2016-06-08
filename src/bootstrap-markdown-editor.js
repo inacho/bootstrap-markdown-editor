@@ -71,7 +71,7 @@
 
 
             // Image drag and drop and upload events
-            if (defaults.imageUpload) {
+            if (defaults.fileUpload) {
 
                 container.find('.md-input-upload').on('change', function() {
                     var files = $(this).get(0).files;
@@ -261,7 +261,15 @@
             }
 
             for (var i = 0; i < uploadedFiles.length; i++) {
-                snippetManager.insertSnippet(editor, '![](' + uploadedFiles[i] + ')' + separation);
+                var tag = '[';
+                if (uploadedFiles[i]['filename'] != undefined){
+                    tag = tag + uploadedFiles[i]['filename'];
+                }
+                tag = tag + '](' + uploadedFiles[i]['filelink'] + ')' + separation;
+                if (uploadedFiles[i]['filetype'] != 'file'){
+                    tag = '!' + tag
+                }
+                snippetManager.insertSnippet(editor, tag);
             }
 
         }).always(function () {
@@ -365,7 +373,7 @@
                 html += '<div class="btn-group">';
                     html += '<button type="button" data-mdtooltip="tooltip" title="' + options.label.btnLink + '" class="md-btn btn btn-sm btn-default" data-btn="link"><span class="glyphicon glyphicon-link"></span></button>';
                     html += '<button type="button" data-mdtooltip="tooltip" title="' + options.label.btnImage + '" class="md-btn btn btn-sm btn-default" data-btn="image"><span class="glyphicon glyphicon-picture"></span></button>';
-                    if (options.imageUpload === true) {
+                    if (options.fileUpload === true) {
                         html += '<div data-mdtooltip="tooltip" title="' + options.label.btnUpload + '" class="btn btn-sm btn-default md-btn-file"><span class="glyphicon glyphicon-upload"></span><input class="md-input-upload" type="file" multiple accept=".jpg,.jpeg,.png,.gif"></div>';
                     }
                 html += '</div>'; // .btn-group
@@ -399,7 +407,7 @@
         theme: 'tomorrow',
         softTabs: true,
         fullscreen: true,
-        imageUpload: false,
+        fileUpload: false,
         uploadPath: '',
         preview: false,
         onPreview: function (content, callback) {
