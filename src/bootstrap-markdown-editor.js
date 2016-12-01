@@ -3,234 +3,6 @@
 
     "use strict";
 
-    var methods = {
-        init: function (options) {
-
-            var defaults = $.extend(true, {}, $.fn.markdownEditor.defaults, options),
-                plugin = this,
-                container,
-                preview = false,
-                fullscreen = false;
-
-            // Hide the textarea
-            plugin.addClass('md-textarea-hidden');
-
-            // Create the container div after textarea
-            container = $('<div/>');
-            plugin.after(container);
-
-            // Replace the content of the div with our html
-            container.addClass('md-container').html(editorHtml(plugin.val(), defaults));
-
-            // If the Bootstrap tooltip library is loaded, initialize the tooltips of the toolbar
-            if (typeof $().tooltip === 'function') {
-                container.find('[data-mdtooltip="tooltip"]').tooltip({
-                    container: 'body'
-                });
-            }
-
-            var mdEditor = container.find('.md-editor'),
-                mdPreview = container.find('.md-preview'),
-                mdLoading = container.find('.md-loading');
-
-            container.css({
-                width: defaults.width
-            });
-
-            mdEditor.css({
-                height: defaults.height,
-                fontSize: defaults.fontSize
-            });
-
-            mdPreview.css({
-                height: defaults.height
-            });
-
-            // Initialize Ace
-            var editor = ace.edit(mdEditor[0]),
-                snippetManager;
-
-            editor.setTheme('ace/theme/' + defaults.theme);
-            editor.getSession().setMode('ace/mode/markdown');
-            editor.getSession().setUseWrapMode(true);
-            editor.getSession().setUseSoftTabs(defaults.softTabs);
-
-            // Sync ace with the textarea
-            editor.getSession().on('change', function() {
-                plugin.val(editor.getSession().getValue());
-            });
-
-            editor.setHighlightActiveLine(false);
-            editor.setShowPrintMargin(false);
-            editor.renderer.setShowGutter(false);
-
-            ace.config.loadModule('ace/ext/language_tools', function () {
-                snippetManager = ace.require('ace/snippets').snippetManager;
-                setShortcuts(editor, snippetManager);
-            });
-
-
-            // Image drag and drop and upload events
-            if (defaults.imageUpload) {
-
-                container.find('.md-input-upload').on('change', function() {
-                    var files = $(this).get(0).files;
-
-                    uploadFiles(defaults.uploadPath, $(this).get(0).files, editor, snippetManager, mdLoading);
-                });
-
-                container.on('dragenter', function (e) {
-                    e.stopPropagation();
-                    e.preventDefault();
-                });
-
-                container.on('dragover', function (e) {
-                    e.stopPropagation();
-                    e.preventDefault();
-                });
-
-                container.on('drop', function (e) {
-                    e.preventDefault();
-                    var files = e.originalEvent.dataTransfer.files;
-
-                    uploadFiles(defaults.uploadPath, files, editor, snippetManager, mdLoading);
-                });
-            }
-
-            // Window resize event
-            if (defaults.fullscreen === true) {
-                $(window).resize(function () {
-                    if (fullscreen === true) {
-                        if (preview === false) {
-                            adjustFullscreenLayout(mdEditor);
-                        } else {
-                            adjustFullscreenLayout(mdPreview);
-                        }
-                    }
-                });
-            }
-
-            // Toolbar events
-            container.find('.md-btn').click(function () {
-                var btnType = $(this).data('btn'),
-                    selectedText = editor.session.getTextRange(editor.getSelectionRange());
-
-                if (btnType === 'h1') {
-                    insertBeforeText(editor, '#');
-
-                } else if (btnType === 'h2') {
-                    insertBeforeText(editor, '##');
-
-                } else if (btnType === 'h3') {
-                    insertBeforeText(editor, '###');
-
-                } else if (btnType === 'ul') {
-                    insertBeforeText(editor, '*');
-
-                } else if (btnType === 'ol') {
-                    insertBeforeText(editor, '1.');
-
-                } else if (btnType === 'bold') {
-                    editor.execCommand('bold');
-
-                } else if (btnType === 'italic') {
-                    editor.execCommand('italic');
-
-                } else if (btnType === 'link') {
-                    editor.execCommand('link');
-
-                } else if (btnType === 'image') {
-                    if (selectedText === '') {
-                        snippetManager.insertSnippet(editor, '![${1:text}](http://$2)');
-                    } else {
-                        snippetManager.insertSnippet(editor, '![' + selectedText + '](http://$1)');
-                    }
-
-                } else if (btnType === 'edit') {
-                    preview = false;
-
-                    mdPreview.hide();
-                    mdEditor.show();
-                    container.find('.btn-edit').addClass('active');
-                    container.find('.btn-preview').removeClass('active');
-
-                    if (fullscreen === true) {
-                        adjustFullscreenLayout(mdEditor);
-                    }
-
-                } else if (btnType === 'preview') {
-                    preview = true;
-
-                    mdPreview.html('<p style="text-align:center; font-size:16px">' + defaults.label.loading + '...</p>');
-
-                    defaults.onPreview(editor.getSession().getValue(), function (content) {
-                        mdPreview.html(content);
-                    });
-
-                    mdEditor.hide();
-                    mdPreview.show();
-                    container.find('.btn-preview').addClass('active');
-                    container.find('.btn-edit').removeClass('active');
-
-                    if (fullscreen === true) {
-                        adjustFullscreenLayout(mdPreview);
-                    }
-
-                } else if (btnType === 'fullscreen') {
-
-                    if (fullscreen === true) {
-                        fullscreen = false;
-
-                        $('body, html').removeClass('md-body-fullscreen');
-                        container.removeClass('md-fullscreen');
-
-                        mdEditor.css('height', defaults.height);
-                        mdPreview.css('height', defaults.height);
-
-                    } else {
-                        fullscreen = true;
-
-                        $('body, html').addClass('md-body-fullscreen');
-                        container.addClass('md-fullscreen');
-
-                        if (preview === false) {
-                            adjustFullscreenLayout(mdEditor);
-                        } else {
-                            adjustFullscreenLayout(mdPreview);
-                        }
-                    }
-
-                    editor.resize();
-                }
-
-                editor.focus();
-            });
-
-            return this;
-        },
-        content: function () {
-            var editor = ace.edit(this.find('.md-editor')[0]);
-            return editor.getSession().getValue();
-        },
-        setContent: function(str) {
-          var editor = ace.edit(this.find('.md-editor')[0]);
-          editor.setValue(str, 1);
-        }
-    };
-
-    $.fn.markdownEditor = function (options) {
-
-        if (methods[options]) {
-            return methods[options].apply(this, Array.prototype.slice.call(arguments, 1));
-
-        } else if (typeof options === 'object' || ! options) {
-            return methods.init.apply(this, arguments);
-
-        } else {
-            $.error('Method ' +  options + ' does not exist on jQuery.markdownEditor');
-        }
-    };
-
     function uploadFiles (url, files, editor, snippetManager, loading) {
         if (! files.length) {
             return;
@@ -391,6 +163,234 @@
 
         return html;
     }
+
+    var methods = {
+        init: function (options) {
+
+            var defaults = $.extend(true, {}, $.fn.markdownEditor.defaults, options),
+                plugin = this,
+                container,
+                preview = false,
+                fullscreen = false;
+
+            // Hide the textarea
+            plugin.addClass('md-textarea-hidden');
+
+            // Create the container div after textarea
+            container = $('<div/>');
+            plugin.after(container);
+
+            // Replace the content of the div with our html
+            container.addClass('md-container').html(editorHtml(plugin.val(), defaults));
+
+            // If the Bootstrap tooltip library is loaded, initialize the tooltips of the toolbar
+            if (typeof $().tooltip === 'function') {
+                container.find('[data-mdtooltip="tooltip"]').tooltip({
+                    container: 'body'
+                });
+            }
+
+            var mdEditor = container.find('.md-editor'),
+                mdPreview = container.find('.md-preview'),
+                mdLoading = container.find('.md-loading');
+
+            container.css({
+                width: defaults.width
+            });
+
+            mdEditor.css({
+                height: defaults.height,
+                fontSize: defaults.fontSize
+            });
+
+            mdPreview.css({
+                height: defaults.height
+            });
+
+            // Initialize Ace
+            var editor = ace.edit(mdEditor[0]),
+                snippetManager;
+
+            editor.setTheme('ace/theme/' + defaults.theme);
+            editor.getSession().setMode('ace/mode/markdown');
+            editor.getSession().setUseWrapMode(true);
+            editor.getSession().setUseSoftTabs(defaults.softTabs);
+
+            // Sync ace with the textarea
+            editor.getSession().on('change', function() {
+                plugin.val(editor.getSession().getValue());
+            });
+
+            editor.setHighlightActiveLine(false);
+            editor.setShowPrintMargin(false);
+            editor.renderer.setShowGutter(false);
+
+            ace.config.loadModule('ace/ext/language_tools', function () {
+                snippetManager = ace.require('ace/snippets').snippetManager;
+                setShortcuts(editor, snippetManager);
+            });
+
+
+            // Image drag and drop and upload events
+            if (defaults.imageUpload) {
+
+                container.find('.md-input-upload').on('change', function() {
+                    var files = $(this).get(0).files;
+
+                    uploadFiles(defaults.uploadPath, files, editor, snippetManager, mdLoading);
+                });
+
+                container.on('dragenter', function (e) {
+                    e.stopPropagation();
+                    e.preventDefault();
+                });
+
+                container.on('dragover', function (e) {
+                    e.stopPropagation();
+                    e.preventDefault();
+                });
+
+                container.on('drop', function (e) {
+                    e.preventDefault();
+                    var files = e.originalEvent.dataTransfer.files;
+
+                    uploadFiles(defaults.uploadPath, files, editor, snippetManager, mdLoading);
+                });
+            }
+
+            // Window resize event
+            if (defaults.fullscreen === true) {
+                $(window).resize(function () {
+                    if (fullscreen === true) {
+                        if (preview === false) {
+                            adjustFullscreenLayout(mdEditor);
+                        } else {
+                            adjustFullscreenLayout(mdPreview);
+                        }
+                    }
+                });
+            }
+
+            // Toolbar events
+            container.find('.md-btn').click(function () {
+                var btnType = $(this).data('btn'),
+                    selectedText = editor.session.getTextRange(editor.getSelectionRange());
+
+                if (btnType === 'h1') {
+                    insertBeforeText(editor, '#');
+
+                } else if (btnType === 'h2') {
+                    insertBeforeText(editor, '##');
+
+                } else if (btnType === 'h3') {
+                    insertBeforeText(editor, '###');
+
+                } else if (btnType === 'ul') {
+                    insertBeforeText(editor, '*');
+
+                } else if (btnType === 'ol') {
+                    insertBeforeText(editor, '1.');
+
+                } else if (btnType === 'bold') {
+                    editor.execCommand('bold');
+
+                } else if (btnType === 'italic') {
+                    editor.execCommand('italic');
+
+                } else if (btnType === 'link') {
+                    editor.execCommand('link');
+
+                } else if (btnType === 'image') {
+                    if (selectedText === '') {
+                        snippetManager.insertSnippet(editor, '![${1:text}](http://$2)');
+                    } else {
+                        snippetManager.insertSnippet(editor, '![' + selectedText + '](http://$1)');
+                    }
+
+                } else if (btnType === 'edit') {
+                    preview = false;
+
+                    mdPreview.hide();
+                    mdEditor.show();
+                    container.find('.btn-edit').addClass('active');
+                    container.find('.btn-preview').removeClass('active');
+
+                    if (fullscreen === true) {
+                        adjustFullscreenLayout(mdEditor);
+                    }
+
+                } else if (btnType === 'preview') {
+                    preview = true;
+
+                    mdPreview.html('<p style="text-align:center; font-size:16px">' + defaults.label.loading + '...</p>');
+
+                    defaults.onPreview(editor.getSession().getValue(), function (content) {
+                        mdPreview.html(content);
+                    });
+
+                    mdEditor.hide();
+                    mdPreview.show();
+                    container.find('.btn-preview').addClass('active');
+                    container.find('.btn-edit').removeClass('active');
+
+                    if (fullscreen === true) {
+                        adjustFullscreenLayout(mdPreview);
+                    }
+
+                } else if (btnType === 'fullscreen') {
+
+                    if (fullscreen === true) {
+                        fullscreen = false;
+
+                        $('body, html').removeClass('md-body-fullscreen');
+                        container.removeClass('md-fullscreen');
+
+                        mdEditor.css('height', defaults.height);
+                        mdPreview.css('height', defaults.height);
+
+                    } else {
+                        fullscreen = true;
+
+                        $('body, html').addClass('md-body-fullscreen');
+                        container.addClass('md-fullscreen');
+
+                        if (preview === false) {
+                            adjustFullscreenLayout(mdEditor);
+                        } else {
+                            adjustFullscreenLayout(mdPreview);
+                        }
+                    }
+
+                    editor.resize();
+                }
+
+                editor.focus();
+            });
+
+            return this;
+        },
+        content: function () {
+            var editor = ace.edit(this.find('.md-editor')[0]);
+            return editor.getSession().getValue();
+        },
+        setContent: function(str) {
+          var editor = ace.edit(this.find('.md-editor')[0]);
+          editor.setValue(str, 1);
+        }
+    };
+
+    $.fn.markdownEditor = function (options) {
+
+        if (methods[options]) {
+            return methods[options].apply(this, Array.prototype.slice.call(arguments, 1));
+
+        } else if (typeof options === 'object' || ! options) {
+            return methods.init.apply(this, arguments);
+
+        } else {
+            $.error('Method ' +  options + ' does not exist on jQuery.markdownEditor');
+        }
+    };
 
     $.fn.markdownEditor.defaults = {
         width: '100%',
