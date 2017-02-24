@@ -111,6 +111,13 @@
         }
     }
 
+    function insertBetweenText (editor, stringBefore, stringAfter) {
+        editor.navigateLineStart();
+        editor.insert(stringBefore + '\n\n');
+        editor.insert(stringAfter);
+        editor.navigateUp();
+    }
+
     function editorHtml (content, options) {
         var html = '';
 
@@ -132,6 +139,12 @@
                 html += '<div class="btn-group">';
                     html += '<button type="button" data-mdtooltip="tooltip" title="' + options.label.btnList + '" class="md-btn btn btn-sm btn-default" data-btn="ul"><span class="glyphicon glyphicon glyphicon-list"></span></button>';
                     html += '<button type="button" data-mdtooltip="tooltip" title="' + options.label.btnOrderedList + '" class="md-btn btn btn-sm btn-default" data-btn="ol"><span class="glyphicon glyphicon-th-list"></span></button>';
+                    if (options.code === true) {
+                        html += '<button type="button" data-mdtooltip="tooltip" title="' + options.label.btnCode + '" class="md-btn btn btn-sm btn-default" data-btn="code"><span class="glyphicon glyphicon-asterisk"></span></button>';
+                    }
+                    if (options.quote === true) {
+                        html += '<button type="button" data-mdtooltip="tooltip" title="' + options.label.btnQuote + '" class="md-btn btn btn-sm btn-default" data-btn="quote"><span class="glyphicon glyphicon-comment"></span></button>';
+                    }
                 html += '</div>'; // .btn-group
 
                 html += '<div class="btn-group">';
@@ -291,6 +304,12 @@
                 } else if (btnType === 'ol') {
                     insertBeforeText(editor, '1.');
 
+                } else if (btnType === 'quote') {
+                    insertBeforeText(editor, '>');
+
+                } else if (btnType === 'code') {
+                    insertBetweenText(editor, '```', '```');
+
                 } else if (btnType === 'bold') {
                     editor.execCommand('bold');
 
@@ -413,6 +432,8 @@
             btnItalic: 'Italic',
             btnList: 'Unordered list',
             btnOrderedList: 'Ordered list',
+            btnCode: 'Code',
+            btnQuote: 'Quote',
             btnLink: 'Link',
             btnImage: 'Insert image',
             btnUpload: 'Upload image',
