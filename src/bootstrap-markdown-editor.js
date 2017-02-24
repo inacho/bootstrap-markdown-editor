@@ -97,6 +97,21 @@
             },
             readOnly: false
         });
+
+        editor.commands.addCommand({
+            name: 'code',
+            bindKey: {win: 'Ctrl-Y',  mac: 'Command-Y'},
+            exec: function (editor) {
+                var selectedText = editor.session.getTextRange(editor.getSelectionRange());
+
+                if (selectedText === '') {
+                    snippetManager.insertSnippet(editor, '```\n${1:text}\n```');
+                } else {
+                    snippetManager.insertSnippet(editor, '```\n' + selectedText + '\n```');
+                }
+            },
+            readOnly: false
+        });
     }
 
     function insertBeforeText (editor, string) {
@@ -109,13 +124,6 @@
             editor.insert(string + ' ');
             editor.navigateLineEnd();
         }
-    }
-
-    function insertBetweenText (editor, stringBefore, stringAfter) {
-        editor.navigateLineStart();
-        editor.insert(stringBefore + '\n\n');
-        editor.insert(stringAfter);
-        editor.navigateUp();
     }
 
     function editorHtml (content, options) {
@@ -140,7 +148,7 @@
                     html += '<button type="button" data-mdtooltip="tooltip" title="' + options.label.btnList + '" class="md-btn btn btn-sm btn-default" data-btn="ul"><span class="glyphicon glyphicon glyphicon-list"></span></button>';
                     html += '<button type="button" data-mdtooltip="tooltip" title="' + options.label.btnOrderedList + '" class="md-btn btn btn-sm btn-default" data-btn="ol"><span class="glyphicon glyphicon-th-list"></span></button>';
                     if (options.code === true) {
-                        html += '<button type="button" data-mdtooltip="tooltip" title="' + options.label.btnCode + '" class="md-btn btn btn-sm btn-default" data-btn="code"><span class="glyphicon glyphicon-asterisk"></span></button>';
+                        html += '<button type="button" data-mdtooltip="tooltip" title="' + options.label.btnCode + '" class="md-btn btn btn-sm btn-default" data-btn="code"><span class="glyphicon glyphicon-console"></span></button>';
                     }
                     if (options.quote === true) {
                         html += '<button type="button" data-mdtooltip="tooltip" title="' + options.label.btnQuote + '" class="md-btn btn btn-sm btn-default" data-btn="quote"><span class="glyphicon glyphicon-comment"></span></button>';
@@ -307,9 +315,6 @@
                 } else if (btnType === 'quote') {
                     insertBeforeText(editor, '>');
 
-                } else if (btnType === 'code') {
-                    insertBetweenText(editor, '```', '```');
-
                 } else if (btnType === 'bold') {
                     editor.execCommand('bold');
 
@@ -318,6 +323,9 @@
 
                 } else if (btnType === 'link') {
                     editor.execCommand('link');
+
+                } else if (btnType === 'code') {
+                    editor.execCommand('code');
 
                 } else if (btnType === 'image') {
                     if (selectedText === '') {
