@@ -230,6 +230,7 @@
                 setShortcuts(editor, snippetManager);
             });
 
+			plugin.data('md-editor', editor);
 
             // Image drag and drop and upload events
             if (defaults.imageUpload) {
@@ -370,19 +371,26 @@
             return this;
         },
         content: function () {
-            var editor = ace.edit(this.find('.md-editor')[0]);
+            var editor = this.data('md-editor');
             return editor.getSession().getValue();
         },
         setContent: function(str) {
-          var editor = ace.edit(this.find('.md-editor')[0]);
+          var editor = this.data('md-editor');
           editor.setValue(str, 1);
-        }
+        },
+        editor: function () {
+            return this.data('md-editor');
+        },
     };
 
     $.fn.markdownEditor = function (options) {
 
         if (methods[options]) {
-            return methods[options].apply(this, Array.prototype.slice.call(arguments, 1));
+        	if (options === "init" || this.data('md-editor')) {
+	            return methods[options].apply(this, Array.prototype.slice.call(arguments, 1));
+        	} else {
+	            $.error('This object has not been initialized as a Markdown Editor.');
+	        }
 
         } else if (typeof options === 'object' || ! options) {
             return methods.init.apply(this, arguments);
