@@ -142,6 +142,8 @@
                     }
                 html += '</div>'; // .btn-group
 
+                html += options.buttons.html;
+
                 if (options.fullscreen === true) {
                     html += '<div class="btn-group pull-right">';
                         html += '<button type="button" class="md-btn btn btn-sm btn-default" data-btn="fullscreen"><span class="glyphicon glyphicon-fullscreen"></span> ' + options.label.btnFullscreen + '</button>';
@@ -362,6 +364,23 @@
                     }
 
                     editor.resize();
+                } else if (btnType in options.buttons.callbacks) {
+                    var element = $(this);
+                    var callback = options.buttons.callbacks[btnType];
+                    callback(element, editor, container, selectedText);
+                }
+
+                editor.focus();
+            });
+
+            container.find('.md-select').change(function() {
+                var btnType = $(this).data('btn'),
+                    selectedText = editor.session.getTextRange(editor.getSelectionRange()),
+                    element = $(this);
+
+                if (btnType in options.buttons.callbacks) {
+                    var callback = options.buttons.callbacks[btnType];
+                    callback(element, editor, container, selectedText);
                 }
 
                 editor.focus();
@@ -401,6 +420,10 @@
         fullscreen: true,
         imageUpload: false,
         uploadPath: '',
+        buttons: {
+            html: '',
+            callbacks: {}
+        },
         preview: false,
         onPreview: function (content, callback) {
             callback(content);
