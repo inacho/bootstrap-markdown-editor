@@ -54,11 +54,39 @@
         <script>
 
             jQuery(document).ready(function($) {
+                /*
+                 * Custom HTML for custom toolbar items
+                 */
+                html = '<div class="btn-group">';
+                html += '<select class="form-control input-sm md-select" data-btn="customCallback">' +
+                    '<option value="value1">Value One</option>' +
+                    '<option value="value2">Value Two</option>' +
+                    '</select>';
+                html += '</div>';
+
+                html += '<div class="btn-group">';
+                    html += '<button type="button" data-mdtooltip="tooltip" title="Add hello world" class="md-btn btn btn-sm btn-default" data-btn="helloWorld">HW</button>';
+                html += '</div>';
 
                 $('#editor').markdownEditor({
                     preview: true,
                     onPreview: function (content, callback) {
                         callback( marked(content) );
+                    },
+                    toolbar: {
+                        html: html,
+                        onCreated: function(container) {
+                            console.log('Elements added to DOM, put your manipulation in here (if needed)');
+                        },
+                        callbacks: {
+                            customCallback: function($element, editor, container, selectedText) {
+                                console.log('customCallback called');
+                                editor.insert($element.val());
+                            },
+                            helloWorld: function($element, editor, container, selectedText) {
+                                editor.insert('Hello World');
+                            }
+                        }
                     }
                 });
 
