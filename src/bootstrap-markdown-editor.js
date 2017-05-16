@@ -142,7 +142,7 @@
                     }
                 html += '</div>'; // .btn-group
 
-                html += options.buttons.html;
+                html += options.toolbar.html;
 
                 if (options.fullscreen === true) {
                     html += '<div class="btn-group pull-right">';
@@ -364,9 +364,9 @@
                     }
 
                     editor.resize();
-                } else if (btnType in options.buttons.callbacks) {
+                } else if (btnType in options.toolbar.callbacks) {
                     var element = $(this);
-                    var callback = options.buttons.callbacks[btnType];
+                    var callback = options.toolbar.callbacks[btnType];
                     callback(element, editor, container, selectedText);
                 }
 
@@ -378,8 +378,8 @@
                     selectedText = editor.session.getTextRange(editor.getSelectionRange()),
                     element = $(this);
 
-                if (btnType in options.buttons.callbacks) {
-                    var callback = options.buttons.callbacks[btnType];
+                if (btnType in options.toolbar.callbacks) {
+                    var callback = options.toolbar.callbacks[btnType];
                     callback(element, editor, container, selectedText);
                 }
 
@@ -387,7 +387,7 @@
             });
 
             // Trigger event to manipulate custom toolbar items
-            buttons.onCreated(container);
+            options.toolbar.onCreated(container);
 
             return this;
         },
@@ -423,7 +423,7 @@
         fullscreen: true,
         imageUpload: false,
         uploadPath: '',
-        buttons: {
+        toolbar: {
             html: '',
             onCreated: function(container) { },
             callbacks: {}
