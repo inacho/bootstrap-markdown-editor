@@ -425,7 +425,7 @@
         uploadPath: '',
         toolbar: {
             html: '',
-            onCreated: function(container) { },
+            onCreated: function() { },
             callbacks: {}
         },
         preview: false,
