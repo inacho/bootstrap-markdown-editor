@@ -386,6 +386,9 @@
                 editor.focus();
             });
 
+            // Trigger event to manipulate custom toolbar items
+            buttons.onCreated(container);
+
             return this;
         },
         content: function () {
@@ -422,6 +425,7 @@
         uploadPath: '',
         buttons: {
             html: '',
+            onCreated: function(container) { },
             callbacks: {}
         },
         preview: false,

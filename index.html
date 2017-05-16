@@ -75,6 +75,9 @@
                     },
                     buttons: {
                         html: html,
+                        onCreated: function(container) {
+                            console.log('Elements added to DOM, put your manipulation in here (if needed)');
+                        },
                         callbacks: {
                             customCallback: function($element, editor, container, selectedText) {
                                 console.log('customCallback called');
