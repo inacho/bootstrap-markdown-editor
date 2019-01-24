@@ -118,40 +118,40 @@
         html += '<div class="md-toolbar">';
             html += '<div class="btn-toolbar">';
 
-                html += '<div class="btn-group">';
-                    html += '<button type="button" data-mdtooltip="tooltip" title="' + options.label.btnHeader1 + '" class="md-btn btn btn-sm btn-default" data-btn="h1">H1</button>';
-                    html += '<button type="button" data-mdtooltip="tooltip" title="' + options.label.btnHeader2 + '" class="md-btn btn btn-sm btn-default" data-btn="h2">H2</button>';
-                    html += '<button type="button" data-mdtooltip="tooltip" title="' + options.label.btnHeader3 + '" class="md-btn btn btn-sm btn-default" data-btn="h3">H3</button>';
+                html += '<div class="btn-group md-toolbar-header mr-2">';
+                    html += '<button type="button" data-mdtooltip="tooltip" title="' + options.label.btnHeader1 + '" class="md-btn btn btn-sm btn-secondary" data-btn="h1">H1</button>';
+                    html += '<button type="button" data-mdtooltip="tooltip" title="' + options.label.btnHeader2 + '" class="md-btn btn btn-sm btn-secondary" data-btn="h2">H2</button>';
+                    html += '<button type="button" data-mdtooltip="tooltip" title="' + options.label.btnHeader3 + '" class="md-btn btn btn-sm btn-secondary" data-btn="h3">H3</button>';
                 html += '</div>'; // .btn-group
 
-                html += '<div class="btn-group">';
-                    html += '<button type="button" data-mdtooltip="tooltip" title="' + options.label.btnBold + '" class="md-btn btn btn-sm btn-default" data-btn="bold"><span class="glyphicon glyphicon-bold"></span></button>';
-                    html += '<button type="button" data-mdtooltip="tooltip" title="' + options.label.btnItalic + '" class="md-btn btn btn-sm btn-default" data-btn="italic"><span class="glyphicon glyphicon-italic"></span></button>';
+                html += '<div class="btn-group md-toolbar-text-style mr-2">';
+                    html += '<button type="button" data-mdtooltip="tooltip" title="' + options.label.btnBold + '" class="md-btn btn btn-sm btn-secondary" data-btn="bold"><span class="fas fa-bold"></span></button>';
+                    html += '<button type="button" data-mdtooltip="tooltip" title="' + options.label.btnItalic + '" class="md-btn btn btn-sm btn-secondary" data-btn="italic"><span class="fas fa-italic"></span></button>';
                 html += '</div>'; // .btn-group
 
-                html += '<div class="btn-group">';
-                    html += '<button type="button" data-mdtooltip="tooltip" title="' + options.label.btnList + '" class="md-btn btn btn-sm btn-default" data-btn="ul"><span class="glyphicon glyphicon glyphicon-list"></span></button>';
-                    html += '<button type="button" data-mdtooltip="tooltip" title="' + options.label.btnOrderedList + '" class="md-btn btn btn-sm btn-default" data-btn="ol"><span class="glyphicon glyphicon-th-list"></span></button>';
+                html += '<div class="btn-group md-toolbar-list mr-2">';
+                    html += '<button type="button" data-mdtooltip="tooltip" title="' + options.label.btnList + '" class="md-btn btn btn-sm btn-secondary" data-btn="ul"><span class="fas fa-list-ul"></span></button>';
+                    html += '<button type="button" data-mdtooltip="tooltip" title="' + options.label.btnOrderedList + '" class="md-btn btn btn-sm btn-secondary" data-btn="ol"><span class="fas fa-list-ol"></span></button>';
                 html += '</div>'; // .btn-group
 
-                html += '<div class="btn-group">';
-                    html += '<button type="button" data-mdtooltip="tooltip" title="' + options.label.btnLink + '" class="md-btn btn btn-sm btn-default" data-btn="link"><span class="glyphicon glyphicon-link"></span></button>';
-                    html += '<button type="button" data-mdtooltip="tooltip" title="' + options.label.btnImage + '" class="md-btn btn btn-sm btn-default" data-btn="image"><span class="glyphicon glyphicon-picture"></span></button>';
+                html += '<div class="btn-group md-toolbar-url mr-auto">';
+                    html += '<button type="button" data-mdtooltip="tooltip" title="' + options.label.btnLink + '" class="md-btn btn btn-sm btn-secondary" data-btn="link"><span class="fas fa-link"></span></button>';
+                    html += '<button type="button" data-mdtooltip="tooltip" title="' + options.label.btnImage + '" class="md-btn btn btn-sm btn-secondary" data-btn="image"><span class="fas fa-image"></span></button>';
                     if (options.imageUpload === true) {
-                        html += '<div data-mdtooltip="tooltip" title="' + options.label.btnUpload + '" class="btn btn-sm btn-default md-btn-file"><span class="glyphicon glyphicon-upload"></span><input class="md-input-upload" type="file" multiple accept=".jpg,.jpeg,.png,.gif"></div>';
+                        html += '<div data-mdtooltip="tooltip" title="' + options.label.btnUpload + '" class="btn btn-sm btn-secondary md-btn-file"><span class="fas fa-file-upload"></span><input class="md-input-upload" type="file" multiple accept=".jpg,.jpeg,.png,.gif"></div>';
                     }
                 html += '</div>'; // .btn-group
 
                 if (options.fullscreen === true) {
-                    html += '<div class="btn-group pull-right">';
-                        html += '<button type="button" class="md-btn btn btn-sm btn-default" data-btn="fullscreen"><span class="glyphicon glyphicon-fullscreen"></span> ' + options.label.btnFullscreen + '</button>';
+                    html += '<div class="btn-group md-toolbar-fullscreen mr-2">';
+                        html += '<button type="button" class="md-btn btn btn-sm btn-secondary" data-btn="fullscreen"><span class="fas fa-expand"></span> ' + options.label.btnFullscreen + '</button>';
                     html += '</div>'; // .btn-group
                 }
 
                 if (options.preview === true) {
-                    html += '<div class="btn-group pull-right">';
-                        html += '<button type="button" class="md-btn btn btn-sm btn-default btn-edit active" data-btn="edit"><span class="glyphicon glyphicon-pencil"></span> ' + options.label.btnEdit + '</button>';
-                        html += '<button type="button" class="md-btn btn btn-sm btn-default btn-preview" data-btn="preview"><span class="glyphicon glyphicon-eye-open"></span> ' + options.label.btnPreview + '</button>';
+                    html += '<div class="btn-group md-toolbar-preview">';
+                        html += '<button type="button" class="md-btn btn btn-sm btn-secondary btn-edit active" data-btn="edit"><span class="fas fa-edit"></span> ' + options.label.btnEdit + '</button>';
+                        html += '<button type="button" class="md-btn btn btn-sm btn-secondary btn-preview" data-btn="preview"><span class="fas fa-eye"></span> ' + options.label.btnPreview + '</button>';
                     html += '</div>'; // .btn-group
                 }
 

@@ -9,7 +9,7 @@ This is a jQuery plugin.
 
 ## Requirements
 
-* Bootstrap 3
+* Bootstrap 4
 * jQuery
 * Ace editor (http://ace.c9.io)
 
